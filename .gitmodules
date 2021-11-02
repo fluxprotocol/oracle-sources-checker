@@ -1,0 +1,3 @@
+[submodule "vendor/basic-fetch"]
+	path = vendor/basic-fetch
+	url = git@github.com:fluxprotocol/basic-fetch-wasm.git
