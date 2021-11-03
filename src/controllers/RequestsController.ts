@@ -12,6 +12,11 @@ export function createRequestsController(jobWalker: JobWalker) {
         res.json(request);
     });
 
+    RequestsController.delete('/:id', async (req, res) => {
+        const request = await jobWalker.removeRequest(req.params.id);
+        res.json(request);
+    });
+
     RequestsController.get('/:id', async (req, res) => {
         const report = await getReport(req.params.id);
 

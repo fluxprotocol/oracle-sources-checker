@@ -61,7 +61,7 @@ export async function executeRequest(request: DataRequest): Promise<ExecuteResul
         ];
 
         if (request.dataType.type === 'number') {
-            args.push(request.dataType.multiplier);
+            args.push(request.dataType.multiplier.toString());
         }
 
         const result = await execute({

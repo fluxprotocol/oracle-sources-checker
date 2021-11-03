@@ -26,6 +26,22 @@ export default class JobWalker {
         });
     }
 
+    async removeRequest(id: string) {
+        if (this.processing.has(id)) {
+            await this.processing.get(id); 
+        }
+
+        const request = this.requests.get(id);
+        if (!request) return;
+
+        request.active = false;
+        await saveReport(request);
+
+        this.requests.delete(id);
+
+        return request;
+    }
+
     async walkRequest(entry: WalkerEntry) {
         try {
             const now = new Date().getTime();
