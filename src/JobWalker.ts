@@ -65,13 +65,11 @@ export default class JobWalker {
             
             if (result.code !== 0) {
                 resultEntry.report.invalids += 1;
-                resultEntry.report.errorLogs.push(result.logs);
             } else {
                 const loggedResult: LoggedOutcome = JSON.parse(result.logs[result.logs.length - 1]);
     
                 if (loggedResult.type === 'Invalid') {
                     resultEntry.report.invalids += 1;
-                    resultEntry.report.errorLogs.push(result.logs);
                 } else {
                     resultEntry.report.valids += 1;
                     
@@ -80,6 +78,8 @@ export default class JobWalker {
                     }
                 }
             }
+
+            resultEntry.report.logs[resultEntry.report.executes] = result.logs;
     
             await saveReport(resultEntry);
             this.requests.set(resultEntry.request.id, resultEntry);
@@ -91,7 +91,7 @@ export default class JobWalker {
                 lastExecuted: new Date().getTime(),
             };
 
-            resultEntry.report.errorLogs.push(error?.toString() ?? error);
+            resultEntry.report.logs[resultEntry.report.executes] = [error?.toString() ?? error];
 
             await saveReport(resultEntry);
             this.requests.set(resultEntry.request.id, resultEntry);

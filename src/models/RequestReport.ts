@@ -4,12 +4,14 @@ export interface RequestReport {
     valids: number;
     outcomes: string[];
     gasReports: string[];
-    errorLogs: string[][];
+    logs: {
+        [executeId: number]: string[];
+    };
 }
 
 export function createEmptyReport(): RequestReport {
     return {
-        errorLogs: [],
+        logs: {},
         executes: 0,
         gasReports: [],
         invalids: 0,
